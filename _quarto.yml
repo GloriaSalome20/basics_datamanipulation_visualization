@@ -1,0 +1,39 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Principles and Practice of Data Visualization in R"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+  sidebar:
+    style: "floating"
+    search: true
+    contents:
+      - section: "Course Details and Installation"
+        contents:
+          - information.qmd
+          - Getting_started_with_R.qmd
+      - section: "Data Visualization"
+        contents:
+          - Preparations_before_visualization.qmd
+          - Basic_Visualization_concept.qmd
+      - section: "Further Resources"
+        contents:
+          - further_resources.qmd
+  page-footer:
+      left:
+        "This page was built by [Quarto](https://quarto.org/).
+        Copyright 2024, Gloria Shirima & Amelia Bertozzi-Villa"
+      right:
+        - icon: github
+
+format:
+  html:
+    theme: cerulean
+    css: styles.css
+    toc: true
+
+editor: visual

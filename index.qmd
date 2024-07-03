@@ -1,0 +1,5 @@
+---
+title: "basics_datamanipulation_visualization"
+---
+
+{{< include information.qmd >}}

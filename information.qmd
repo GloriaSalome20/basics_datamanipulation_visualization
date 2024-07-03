@@ -1,0 +1,36 @@
+---
+title: "Installing/Updating R and RStudio"
+format:
+  html:
+    toc: true
+    toc-location: right
+    number-sections: false
+    css: styles.css
+    smooth-scroll: true
+  pdf:
+    documentclass: article
+execute:
+  echo: true
+  warning: false
+---
+The goal of this workshop is to equip participants with the ability to recognize and produce Manipulated data & visualizations in accordance with the best practices of the field. Looking forward to meeting you all!
+
+## Before the Workshop
+
+Please install R, RStudio, and the `ggplot2` library following these [installation instructions](Getting_started_with_R.qmd). If you have any trouble installing I will be in the venue 30 min before the session where you can come for assistance. Installation might take 15 minutes or more even on a good internet connection, so please install ahead of time!
+
+::: callout-tip
+### Note
+
+-   All software used in this workshop is free.
+:::
+
+{{< pagebreak >}}
+
+
+
+{{< pagebreak >}}
+
+## After the Workshop
+
+Fill out the online post-workshop questionnaire that will be provided after the session.
