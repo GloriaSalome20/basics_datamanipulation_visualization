@@ -26,7 +26,7 @@ The beauty of the dplyr package is its functions are easy to learn and remember 
 
 We start by cleaning the enviroment and calling the library we intend to use
 
-```{r }
+```{r results='hide', warning=FALSE}
 remove(list=objects())
 
 library(tidyverse)
@@ -47,6 +47,14 @@ df<- read.csv("C:/Users/shirgl/Desktop/SwissTPH/Trainings/NIMRI_MAPEA/Amelia_vis
 ```
 
 ## Data Cleaning
+
+
+::: callout-tip
+### Aim:
+-   Identify the Null and Duplicates in the dataset
+-   Clean the dataset by removing Null entries and Duplicates
+
+:::
 
 ### Find and count missing Values
 When we clean dataset, we check if there empty entries, duplicates, outliers and ensure we deal with all these before begining your analysis or visualization.
@@ -86,7 +94,7 @@ some observations can be a complete duplicate, this means all the column entries
 
 ### Duplicates
 checking for duplicates and dropping
-```{r,results='hide'}
+```{r results='hide'}
 duplicated(df)
 sum(duplicated(df))
 ```
@@ -102,15 +110,20 @@ df_clean<-unique(df_NAomitted)
 
 also a function dinstict() can be used to deal with duplicates removing a whole observation that is duplicated or a variable with duplicate.
 
-
 :::
 
 # Rename, select, filter
 
+::: callout-tip
+### Aim:
+-   Filter the observations with quantitative and qualitative options
+-   select variables from the dataset
+-   Rename the variables
+ 
+:::
+
+
 ::: panel-tabset
-
-
-
 
 ### Select
 
@@ -128,6 +141,20 @@ select(df,-c(date_tested,adm1,adm2))
 select(df_clean,starts_with("A"))
 ```
 
+::: callout-tip
+### Exercise:
+create a subset data from the df_clean that has admin1 with all the test variables
+
+:::
+
+::: {.callout-tip collapse=true}
+### Solution:
+```{r}
+select(df_clean,c(adm1,starts_with("tes")))
+```
+:::
+
+
 ### Filter
 Filtering observations based on their values can be done with the filter() function. This function works on both quantitative and qualitative variables. with syntax of :\\
 filter(data , ....)
@@ -142,6 +169,19 @@ filter(df_clean, adm1==c("East","West"))
 filter(df_clean,adm1=="West" & adm2=="Bamakiary")
 ```
 
+::: callout-tip
+### Exercise:
+create a subset data from the df_clean by filtering the adm1 east and total confirmed cases greater than 500
+:::
+
+::: {.callout-tip collapse=true}
+### Solution:
+```{r}
+filter(df_clean, adm1=="East"& conf_total>500)
+```
+:::
+
+
 
 ### Rename
 The rename() function is used to change variable name. with a syntax of: \\ 
@@ -153,39 +193,146 @@ rename(df_clean, date=date_tested)
 
 :::
 
-# pipe
+
+
+
+
+## pipe
+
+::: callout-tip
+### Aim:
+-   To ensure we combine different functions in one command using pipe
+-   Create new variables
+
+:::
+Using pipe operator ( %>% ) allows you to write sub-queries like we do it in sql. Functions can be written without pipe operator but this helps us to wrap multiple functions together at one command. Syntax data %>% functions
+
+
 ```{r,results='hide'}
-#df %>% select() %>% filter
+#instead of writing
+filter(df_clean, adm1 == "East")
+
+#we use
+
+df_clean %>% filter(adm1 == "East")
+
 ```
+
+
+```{r}
+df_clean %>% select(adm1,adm2) %>% 
+  rename(admin_country=adm1) %>% 
+  filter(adm2=="Buoadara")
+```
+
 
 ## connected operations
  In dplyr some operations are connected, with group by function instead of showing all the groups/ categories one by one it gives you the groups available and with summarise() function you are able to display various statistical results of the groups.
 ::: panel-tabset
 
-### group_by
+### group_by 
+The group_by() function is used to group data by categorical variable(s).
+
+```{r}
+df_clean %>% group_by(adm1) %>% summarise(n())
+```
+```{r}
+df_clean %>% 
+  group_by(adm1) %>%
+  summarise(sum_conf=max(conf_total))
+```
 
 
 ### summarise
 
+in the summarise function we can have counts - n(),sum - sum(),average - mean(),max - max() etc 
+
+
+::: callout-tip
+### Exercise:
+using pipe create a subset of data that has adm1,adm2,date_tested,conf_total. Then filter to include the conf_total greate than 100, group by adm2 and display the average of the confirmed cases, lastly remane the adm2 to region_level
+:::
+
+
+::: {.callout-tip collapse=true}
+### Solution:
+```{r}
+df_clean %>% select(adm1,adm2,date_tested,conf_total) %>% 
+  filter(conf_total>100) %>% 
+  group_by(adm2) %>% 
+  summarise(mean_case=mean(conf_total)) %>% 
+  rename(region_level=adm2)
+```
+:::
+
+
+
 
 ### mutate
+This function allows you to create a new variable in the data set, it can relate to the other variables or not. 
+
+
 creating a new variable confirmed cases per 1000
-:::
+```{r,results='hide'}
+df_clean %>% mutate(case_per_1000 = conf_total/1000)
+```
 
-
-
-::: panel-tabset
-
-###merge
-
-
-### arrange/sort
+::: callout-tip
+### Exercise:
+create a new variable combined in the df_clean dataset with the sum of total test and total confirmed cases
 
 :::
 
+::: {.callout-tip collapse=true}
+### Solution:
+```{r}
+df_clean %>% mutate(combined= (conf_total + test_total))
+```
+:::
+
+:::
 
 
-```{r echo=FALSE}
+# Visualisation
+
+
+
+
+<!-- ```{r} -->
+<!-- dfmaba<-df_clean %>% filter(adm2=="Mabangata") %>%  -->
+<!--   select(adm1,adm2,date_tested,conf_total,conf_u5,conf_ov5) %>%  -->
+<!--   pivot_longer(cols = c(conf_u5,conf_total,conf_ov5), -->
+<!--                names_to = "age_group", -->
+<!--                values_to = "confirmed_case") %>%  -->
+<!--   mutate(incidence= confirmed_case/2500) -->
+<!-- ``` -->
+
+
+
+## Main Objective
+
+At the end of the training we will be able to produce two main plots and understand how to go about them:
+
+```{r echo=FALSE,warning=FALSE}
+
+df_clean$date_tested <- as.Date(df_clean$date_tested,"%m/%d/%Y")
+
+
+ggplot(data=df_clean %>% filter(adm1=="East"),aes(x=date_tested, y= conf_total))+
+  geom_point()+
+  labs(x="Month", 
+       y="Total Confirmed cases",
+       title="Malaria confirmed cases, East Zone, 2018") +
+  theme_bw() +facet_wrap(~ adm2)+
+  scale_x_date(date_breaks = "1 month", date_labels = "%B")+
+  theme(plot.title = element_text(hjust=0.5),
+         axis.text.x = element_text(angle=90,hjust=0.5)) 
+  # 
+```
+
+and 
+
+```{r echo=FALSE,warning=FALSE}
 df <- read.csv("C:/Users/shirgl/Desktop/SwissTPH/Trainings/NIMRI_MAPEA/Basics_to_data_manipulation_and_visualization/Mabangata_region_incidence2018.csv")
 
 df$date_tested <- as.Date(df$date_tested,"%m/%d/%Y")
@@ -193,11 +340,7 @@ df_und5<- df %>% filter(age_group=="u5")
 ```
 
 
-## Main Objective
-
-At the end of the training we will be able to produce this plot:
-
-```{r echo=FALSE}
+```{r echo=FALSE,warning=FALSE}
 ggplot(data=df,aes(x=date_tested, y= incidence))+
   geom_line(aes(color=age_group)) +
   geom_point()+
@@ -205,11 +348,12 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
        y="Incidence (Cases/100,000)",
        title="Malaria Incidence, Mabangata Region, 2018",
        colour="Age Group") +
-  theme_bw() 
-  # theme(plot.title = element_text(hjust=0.5),
-  #       axis.text.x = element_text(angle=45,hjust=1)) +
-  # scale_x_date(date_breaks = "1 month", date_labels = "%B")
+  theme_bw() +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle=45,hjust=1)) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%B")
 ```
+
 
 ## `ggplot2`: A Layered Approach to Plotting
 
@@ -654,6 +798,10 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
 
 :::
 
+
+
+
+
 ::: {.callout-tip collapse=true}
 ### Solution
 ```{r}
@@ -752,6 +900,79 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
 ```
 :::
 
-And there it is! We've gone from a set of numbers on a page to a nice, polished figure ready for a presentation. 
+And there it is! We've gone from a set of numbers on a page to a nice, polished figure ready for a presentation.  One of our main objective is done, we are yet to go to the next with few more steps. 
+
+
+
+
+
+
+## Faceting the graphs
+
+::: callout-tip
+### Aim:
+-   Plot the lines each on its own, but in the same graph
+-   customise the scales
+
+:::
+ggplot2 in R facet layer is used to split the data up into subsets of the entire dataset and it allows the subsets to be visualized on the same plot. here we facet the three lines of the age groups each to have its own graph
+
+::: panel-tabset
+### default facet
+
+```{r}
+#using facet_wrap
+ggplot(data=df,aes(x=date_tested,y=incidence)) +
+  geom_line() +
+  geom_point()+
+  facet_wrap( ~age_group)
+```
+
+
+### horizontal
+```{r}
+# in columns
+ggplot(data=df,aes(x=date_tested,y=incidence)) +
+  geom_line() +
+  geom_point()+
+  facet_grid( . ~ age_group)
+```
+
+### Vertical
+```{r}
+# in rows
+ggplot(data=df,aes(x=date_tested,y=incidence)) +
+  geom_line() +
+  geom_point()+
+  facet_grid( age_group ~ .)
+
+
+
+```
+
+
+### custimising scale
+```{r}
+ggplot(data=df,aes(x=date_tested,y=incidence)) +
+  geom_line() +
+  geom_point()+
+  facet_wrap(~age_group, scales = "free")
+```
+
+:::
+
+
+## Customizing x-axis : ticks and dates
+
+::: callout-tip
+### Aim:
+-   rotate the x axis ticks
+-   Deal with dates that can be long to display all
+:::
+
+```{r}
+```
+
+
 
 We've only scratched the surface of what you can do with `ggplot2` today, but we hope we've given you a strong basis and you'll be able to learn more in the future!
