@@ -26,7 +26,7 @@ website:
   page-footer:
       left:
         "This page was built by [Quarto](https://quarto.org/).
-        Copyright 2024, Gloria Shirima & Amelia Bertozzi-Villa"
+        Copyright 2024, Gloria Shirima"
       right:
         - icon: github
 
