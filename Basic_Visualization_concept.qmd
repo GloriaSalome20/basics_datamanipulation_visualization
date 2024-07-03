@@ -24,7 +24,7 @@ The beauty of the dplyr package is its functions are easy to learn and remember 
 
 :::
 
-We start by cleaning the enviroment and calling the library we intend to use
+We start by cleaning the enviroment and calling the library we intend to use in the analysis
 
 ```{r results='hide', warning=FALSE}
 remove(list=objects())
