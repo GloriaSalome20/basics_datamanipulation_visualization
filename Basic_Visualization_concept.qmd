@@ -15,13 +15,10 @@ execute:
 
 # Data Manipulation
 
-In this first section we aim to perform data cleaning and manipulate the data to a subset that will be usefull to our analysis. We aim to have a small subset that that we will use it for our visualization section. Using dplyr package in R to perform data filtering,renaming, sample,arrange/sort,creating new columns and summarising the large dataset. 
-
+In this first section we aim to perform data cleaning and manipulate the data to a subset that will be usefull to our analysis. We aim to have a small subset that that we will use it for our visualization section. Using dplyr package in R to perform data filtering,renaming, sample,arrange/sort,creating new columns and summarising the large dataset.
 
 ::: callout-tip
-
 The beauty of the dplyr package is its functions are easy to learn and remember eg. for filtering the data we use filter()
-
 :::
 
 We start by cleaning the enviroment and calling the library we intend to use in the analysis
@@ -40,7 +37,6 @@ library(gridExtra)
 
 Our dataset is a csv file we read the data using the directory/path and name it df
 
-
 ```{r}
 df<- read.csv("C:/Users/shirgl/Desktop/SwissTPH/Trainings/NIMRI_MAPEA/Amelia_vis_workshop/clean_routine_data.csv")
 
@@ -48,21 +44,19 @@ df<- read.csv("C:/Users/shirgl/Desktop/SwissTPH/Trainings/NIMRI_MAPEA/Amelia_vis
 
 ## Data Cleaning
 
-
 ::: callout-tip
 ### Aim:
+
 -   Identify the Null and Duplicates in the dataset
 -   Clean the dataset by removing Null entries and Duplicates
-
 :::
 
 ### Find and count missing Values
+
 When we clean dataset, we check if there empty entries, duplicates, outliers and ensure we deal with all these before begining your analysis or visualization.
 
 ::: panel-tabset
-
 ### NA / empty entries
-
 
 ```{r,results='hide'}
 # in the whole data set
@@ -76,31 +70,32 @@ colSums(is.na(df))
 which(is.na(df$test_total))
 
 ```
+
 ### Solving the missing
 
-can be solved by droping the observation and sometimes replacing with 999. we will drop the row with one entry that has an NA 
+can be solved by droping the observation and sometimes replacing with 999. we will drop the row with one entry that has an NA
 
 ```{r,results='hide'}
 df_NAomitted<- na.omit(df)
 df2_NAommited<- df %>% drop_na()
 ```
-
 :::
 
 ### Finding Duplicates and dealing with them
+
 some observations can be a complete duplicate, this means all the column entries are similar. To deal with duplicates we take the unique observations in the dataset.
 
 ::: panel-tabset
-
 ### Duplicates
+
 checking for duplicates and dropping
+
 ```{r results='hide'}
 duplicated(df)
 sum(duplicated(df))
 ```
 
 ### Dealing with duplicates
-
 
 ```{r,results='hide'}
 #remove duplicate by unique or distinct
@@ -109,22 +104,19 @@ df_clean<-unique(df_NAomitted)
 ```
 
 also a function dinstict() can be used to deal with duplicates removing a whole observation that is duplicated or a variable with duplicate.
-
 :::
 
 # Rename, select, filter
 
 ::: callout-tip
 ### Aim:
+
 -   Filter the observations with quantitative and qualitative options
 -   select variables from the dataset
 -   Rename the variables
- 
 :::
 
-
 ::: panel-tabset
-
 ### Select
 
 There multiple ways to select specific variable in the dataset, we will use select() functions with syntax :select(data , ....)
@@ -143,21 +135,21 @@ select(df_clean,starts_with("A"))
 
 ::: callout-tip
 ### Exercise:
-create a subset data from the df_clean that has admin1 with all the test variables
 
+create a subset data from the df_clean that has admin1 with all the test variables
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution:
+
 ```{r}
 select(df_clean,c(adm1,starts_with("tes")))
 ```
 :::
 
-
 ### Filter
-Filtering observations based on their values can be done with the filter() function. This function works on both quantitative and qualitative variables. with syntax of :\\
-filter(data , ....)
+
+Filtering observations based on their values can be done with the filter() function. This function works on both quantitative and qualitative variables. with syntax of :\\ filter(data , ....)
 
 ```{r,results='hide'}
 filter(df_clean,adm1=="East")
@@ -171,42 +163,39 @@ filter(df_clean,adm1=="West" & adm2=="Bamakiary")
 
 ::: callout-tip
 ### Exercise:
+
 create a subset data from the df_clean by filtering the adm1 east and total confirmed cases greater than 500
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution:
+
 ```{r}
 filter(df_clean, adm1=="East"& conf_total>500)
 ```
 :::
 
-
-
 ### Rename
-The rename() function is used to change variable name. with a syntax of: \\ 
+
+The rename() function is used to change variable name. with a syntax of: \\
 
 rename(data , new_name = old_name)
+
 ```{r,results='hide'}
 rename(df_clean, date=date_tested)
 ```
-
 :::
-
-
-
-
 
 ## pipe
 
 ::: callout-tip
 ### Aim:
+
 -   To ensure we combine different functions in one command using pipe
 -   Create new variables
-
 :::
-Using pipe operator ( %>% ) allows you to write sub-queries like we do it in sql. Functions can be written without pipe operator but this helps us to wrap multiple functions together at one command. Syntax data %>% functions
 
+Using pipe operator ( %\>% ) allows you to write sub-queries like we do it in sql. Functions can be written without pipe operator but this helps us to wrap multiple functions together at one command. Syntax data %\>% functions
 
 ```{r,results='hide'}
 #instead of writing
@@ -218,44 +207,43 @@ df_clean %>% filter(adm1 == "East")
 
 ```
 
-
 ```{r}
 df_clean %>% select(adm1,adm2) %>% 
   rename(admin_country=adm1) %>% 
   filter(adm2=="Buoadara")
 ```
 
-
 ## connected operations
- In dplyr some operations are connected, with group by function instead of showing all the groups/ categories one by one it gives you the groups available and with summarise() function you are able to display various statistical results of the groups.
-::: panel-tabset
 
-### group_by 
+In dplyr some operations are connected, with group by function instead of showing all the groups/ categories one by one it gives you the groups available and with summarise() function you are able to display various statistical results of the groups. ::: panel-tabset
+
+### group_by
+
 The group_by() function is used to group data by categorical variable(s).
 
 ```{r}
 df_clean %>% group_by(adm1) %>% summarise(n())
 ```
+
 ```{r}
 df_clean %>% 
   group_by(adm1) %>%
   summarise(sum_conf=max(conf_total))
 ```
 
-
 ### summarise
 
-in the summarise function we can have counts - n(),sum - sum(),average - mean(),max - max() etc 
-
+in the summarise function we can have counts - n(),sum - sum(),average - mean(),max - max() etc
 
 ::: callout-tip
 ### Exercise:
+
 using pipe create a subset of data that has adm1,adm2,date_tested,conf_total. Then filter to include the conf_total greate than 100, group by adm2 and display the average of the confirmed cases, lastly remane the adm2 to region_level
 :::
 
-
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution:
+
 ```{r}
 df_clean %>% select(adm1,adm2,date_tested,conf_total) %>% 
   filter(conf_total>100) %>% 
@@ -265,26 +253,25 @@ df_clean %>% select(adm1,adm2,date_tested,conf_total) %>%
 ```
 :::
 
-
-
-
 ### mutate
-This function allows you to create a new variable in the data set, it can relate to the other variables or not. 
 
+This function allows you to create a new variable in the data set, it can relate to the other variables or not.
 
 creating a new variable confirmed cases per 1000
+
 ```{r,results='hide'}
 df_clean %>% mutate(case_per_1000 = conf_total/1000)
 ```
 
 ::: callout-tip
 ### Exercise:
-create a new variable combined in the df_clean dataset with the sum of total test and total confirmed cases
 
+create a new variable combined in the df_clean dataset with the sum of total test and total confirmed cases
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution:
+
 ```{r}
 df_clean %>% mutate(combined= (conf_total + test_total))
 ```
@@ -292,22 +279,23 @@ df_clean %>% mutate(combined= (conf_total + test_total))
 
 :::
 
-
 # Visualisation
 
-
-
-
 <!-- ```{r} -->
+
 <!-- dfmaba<-df_clean %>% filter(adm2=="Mabangata") %>%  -->
+
 <!--   select(adm1,adm2,date_tested,conf_total,conf_u5,conf_ov5) %>%  -->
+
 <!--   pivot_longer(cols = c(conf_u5,conf_total,conf_ov5), -->
+
 <!--                names_to = "age_group", -->
+
 <!--                values_to = "confirmed_case") %>%  -->
+
 <!--   mutate(incidence= confirmed_case/2500) -->
+
 <!-- ``` -->
-
-
 
 ## Main Objective
 
@@ -330,7 +318,7 @@ ggplot(data=df_clean %>% filter(adm1=="East"),aes(x=date_tested, y= conf_total))
   # 
 ```
 
-and 
+and
 
 ```{r echo=FALSE,warning=FALSE}
 df <- read.csv("C:/Users/shirgl/Desktop/SwissTPH/Trainings/NIMRI_MAPEA/Basics_to_data_manipulation_and_visualization/Mabangata_region_incidence2018.csv")
@@ -338,7 +326,6 @@ df <- read.csv("C:/Users/shirgl/Desktop/SwissTPH/Trainings/NIMRI_MAPEA/Basics_to
 df$date_tested <- as.Date(df$date_tested,"%m/%d/%Y")
 df_und5<- df %>% filter(age_group=="u5") 
 ```
-
 
 ```{r echo=FALSE,warning=FALSE}
 ggplot(data=df,aes(x=date_tested, y= incidence))+
@@ -354,11 +341,11 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
   scale_x_date(date_breaks = "1 month", date_labels = "%B")
 ```
 
-
 ## `ggplot2`: A Layered Approach to Plotting
 
 ::: callout-tip
 ### Aim:
+
 -   Learn about the layered approach of ggplot.
 -   Understand how each layer adds elements to the plot.
 :::
@@ -368,7 +355,6 @@ The `ggplot` library is a powerful tool for creating data visualizations in R. I
 In ggplot, you start with a base plot and add layers called "geometries", or `geom`s. Each layer in ggplot adds a different aspect to the plot, allowing you to customize and enhance the visualization. Once geoms have been added, labels and other customizations can be added in a similar way.
 
 ::: panel-tabset
-
 ### Base Plot: No Information
 
 Every plot in ggplot starts with the function `ggplot`. With no additional information about what to display, it will simply show a grey box:
@@ -384,7 +370,6 @@ The ggplot function must include an argument to the dataset we want to plot. Her
 ```{r}
 ggplot(data = df_und5)
 ```
-
 
 ### Base Plot: With `x` and `y`
 
@@ -412,7 +397,6 @@ ggplot(data=df_und5, aes(x=date_tested, y=incidence)) +
   geom_point() +
   geom_line()
 ```
-
 :::
 
 The order in which you append your geoms to the main `ggplot` function matters: whatever you list first will go underneath whatever comes next. For example, observe the difference between these two pieces of code and the plots they produce:
@@ -432,7 +416,7 @@ ggplot(data=df_und5, aes(x=date_tested, y=incidence)) +
 
 It's easy and fun to switch layers around in ggplot, but watch out for any dangling `+` signs at the end of your plots! If you leave a `+` dangling at the end like this, your code will think that you're still typing your command and won't show your plot:
 
-```
+```         
 ggplot(data=df_und5, aes(x=date_tested, y=incidence)) +
   geom_line(size=2) +
   geom_point(colour="red", size=4) +
@@ -440,14 +424,12 @@ ggplot(data=df_und5, aes(x=date_tested, y=incidence)) +
 
 Conversely, if you miss a `+` in the middle, your code will only show you the first part of your plot, then throw an error:
 
-```
+```         
 ggplot(data=df_und5, aes(x=date_tested, y=incidence)) +
   geom_line(size=2) 
   geom_point(colour="red", size=4) 
 ```
-
 :::
-
 
 ::: callout-tip
 ### Exercise
@@ -459,25 +441,24 @@ ggplot(data=df_und5, aes(x=date_tested, y=incidence)) +
   geom_point(colour="orange", size=4) + 
   geom_line(colour="blue", size=2) 
 ```
-
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution
+
 ```{r}
 ggplot(data=df_und5, aes(x=date_tested, y=incidence)) +
   geom_line(colour="blue", size=2) +
   geom_point(colour="orange", size=4)  
   
 ```
-
 :::
-
 
 ## Customizing `geom`s
 
 ::: callout-tip
 ### Aim:
+
 -   Adjust the color, size, shape, and linetype of geom features
 :::
 
@@ -503,7 +484,6 @@ ggplot(data=df_und5, aes(x=date_tested, y=incidence)) +
 Others are specific to specific geoms, as in the examples below:
 
 ::: panel-tabset
-
 ## `linetype` for Lines
 
 Options include "blank", "solid", "dashed", "dotted", "dotdash", "longdash", and "twodash".
@@ -521,7 +501,7 @@ ggplot(data = df_und5, aes(x = date_tested, y = incidence))+
 
 ## `shape` for Points
 
-Shapes can take any number from 1 to 25. 
+Shapes can take any number from 1 to 25.
 
 ```{r}
 ggplot(data = df_und5, aes(x = date_tested, y = incidence))+ 
@@ -533,7 +513,6 @@ ggplot(data = df_und5, aes(x = date_tested, y = incidence))+
 ggplot(data = df_und5, aes(x = date_tested, y = incidence))+ 
   geom_point(colour="red", size=3, shape=4)
 ```
-
 :::
 
 You can layer these as before:
@@ -545,25 +524,24 @@ ggplot(data = df_und5, aes(x = date_tested, y = incidence))+
   geom_point(colour="red", size=3, shape=4)
 ```
 
-
 ::: callout-tip
 ### Exercise:
 
 Modify the code below so that:
 
-- the line is orange, dashed, and size 2
-- the points are green, shape 16, and size 4
+-   the line is orange, dashed, and size 2
+-   the points are green, shape 16, and size 4
 
 ```{r}
 ggplot(data = df_und5, aes(x = date_tested, y = incidence))+ 
   geom_line(colour="blue",size=2,linetype="dotted") +
   geom_point(colour="red", size=3, shape=4)
 ```
-
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution
+
 ```{r}
 ggplot(data = df_und5, aes(x = date_tested, y = incidence))+ 
   geom_line(colour="orange",size=2,linetype="dashed") +
@@ -580,9 +558,9 @@ ggplot(data = df_und5, aes(x = date_tested, y = incidence))+
 -   Learn when to use aes to map variables to aesthetics.
 :::
 
-In the presentation, we learned that all visualizations are **mappings** of information from  abstract numbers into visual concepts like location, shape, color, etc.
+In the presentation, we learned that all visualizations are **mappings** of information from abstract numbers into visual concepts like location, shape, color, etc.
 
-The `aes()` function is used whenever we want to map variables in our dataset to aesthetic properties such as x and y axes, colors, shapes, etc. It is one of the most confusing aspects of ggplot, but also one of the most powerful once you get used to it. 
+The `aes()` function is used whenever we want to map variables in our dataset to aesthetic properties such as x and y axes, colors, shapes, etc. It is one of the most confusing aspects of ggplot, but also one of the most powerful once you get used to it.
 
 ### `x` and `y`
 
@@ -609,26 +587,22 @@ ggplot(data = df_und5, aes(x = incidence, y = date_tested,)) +
 ggplot(data = df_und5, aes(x = date_tested, y = pop)) +
     geom_point()
 ```
-
 :::
-
 
 ::: callout-tip
 ### Exercise
 
-Create a scatter plot using the `df_und5` dataset, with date (`date_tested`) on the x axis and  confirmed cases (`conf`) on the y axis.
-
+Create a scatter plot using the `df_und5` dataset, with date (`date_tested`) on the x axis and confirmed cases (`conf`) on the y axis.
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution
+
 ```{r}
 ggplot(data = df_und5, aes(x = date_tested, y = conf)) +
     geom_point()
 ```
-
 :::
-
 
 ### Color
 
@@ -642,12 +616,13 @@ ggplot(data = df, aes(x = date_tested, y = incidence)) +
 Now, instead of a single time series, we have three time series: one for each age group. But it's hard to differentiate them right now because they're all the same shape and size. It would be nice if we could make each age group a different color, using the `age_group` column name. How do you think we could do this?
 
 Let's try a few options:
-```
+
+```         
 ggplot(data = df, aes(x = date_tested, y = incidence)) +
   geom_point(colour=age_group)
 ```
 
-```
+```         
 ggplot(data = df, aes(x = date_tested, y = incidence)) +
   geom_point(colour="age_group")
 ```
@@ -665,7 +640,6 @@ A ton of cool things just happened! Ggplot turned each age group a different col
 ggplot(data = df, aes(x = date_tested, y = incidence)) +
   geom_line(aes(colour=age_group))
 ```
-
 
 ### Other Aesthetics
 
@@ -699,25 +673,22 @@ ggplot(data=df,aes(x=date_tested,y=incidence))+
 ggplot(data=df,aes(x=date_tested,y=incidence))+
   geom_line(aes(linetype=age_group))
 ```
-
 :::
 
 ::: callout-tip
 ### Exercise:
 
-Create the following plot:
-![](images/line_size_exercise.png)
+Create the following plot: ![](images/line_size_exercise.png)
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution:
+
 ```{r}
 ggplot(data=df,aes(x=date_tested,y=incidence))+
   geom_line(aes(size=age_group))
 ```
-
 :::
-
 
 ::: callout-tip
 ## Note
@@ -731,8 +702,6 @@ ggplot(data = df, aes(x = date_tested, y = incidence, color = incidence)) +
 
 There are many, many ways to customize the colors of your plots. Going into detail is beyond the scope of this workshop.
 :::
-
-
 
 ## Mixing and Matching Aesthetics
 
@@ -760,15 +729,13 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
   geom_line(aes(colour=age_group)) +
   geom_point(aes(size=incidence, shape=age_group))
 ```
+
 ::: callout-tip
 ### Exercise:
 
 In the plot above, why are the points black instead of in color?
-
 :::
-
 :::
-
 
 ::: callout-tip
 ### Exercise:
@@ -776,17 +743,16 @@ In the plot above, why are the points black instead of in color?
 1.  Write a code snippet to create the following plot:
 
 ![](images/mixed_aes_exercise_1.png)
-
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution
+
 ```{r}
 ggplot(data=df,aes(x=date_tested,y=incidence)) +
   geom_line(aes(linetype=age_group)) +
   geom_point(aes(color=age_group))
 ```
-
 :::
 
 ::: callout-tip
@@ -795,40 +761,35 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
 1.  Write a code snippet to create the following plot:
 
 ![](images/mixed_aes_exercise_2.png)
-
 :::
 
-
-
-
-
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution
+
 ```{r}
 ggplot(data=df,aes(x=date_tested,y=incidence)) +
   geom_line(aes(color=age_group)) +
   geom_point()
 ```
-
 :::
-
-
 
 ## Customizing Plots for Presentation and Publication
 
 ::: callout-tip
 ### Aim:
+
 Learn how to customize plots for presentation and publication. Adjust plot elements such as titles, labels, themes, and scales.
 :::
 
 With our last exercise, we almost created our goal plot for the session:
+
 ```{r}
 ggplot(data=df,aes(x=date_tested,y=incidence)) +
   geom_line(aes(color=age_group)) +
   geom_point()
 ```
 
-All that's left to do is adjust the themes and labeling. 
+All that's left to do is adjust the themes and labeling.
 
 Customizing plots is essential for making them more visually appealing and informative for presentation or publication.
 
@@ -874,9 +835,7 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
        title="Malaria 2018",
        color="Age Group") 
 ```
-
 :::
-
 
 ::: callout-tip
 ### Exercise:
@@ -886,8 +845,9 @@ Create the following plot:
 ![](images/final_image.png)
 :::
 
-::: {.callout-tip collapse=true}
+::: {.callout-tip collapse="true"}
 ### Solution
+
 ```{r}
 ggplot(data=df,aes(x=date_tested, y= incidence))+
   geom_line(aes(color=age_group)) +
@@ -900,21 +860,17 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
 ```
 :::
 
-And there it is! We've gone from a set of numbers on a page to a nice, polished figure ready for a presentation.  One of our main objective is done, we are yet to go to the next with few more steps. 
-
-
-
-
-
+And there it is! We've gone from a set of numbers on a page to a nice, polished figure ready for a presentation. One of our main objective is done, we are yet to go to the next with few more steps.
 
 ## Faceting the graphs
 
 ::: callout-tip
 ### Aim:
+
 -   Plot the lines each on its own, but in the same graph
 -   customise the scales
-
 :::
+
 ggplot2 in R facet layer is used to split the data up into subsets of the entire dataset and it allows the subsets to be visualized on the same plot. here we facet the three lines of the age groups each to have its own graph
 
 ::: panel-tabset
@@ -928,8 +884,8 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
   facet_wrap( ~age_group)
 ```
 
-
 ### horizontal
+
 ```{r}
 # in columns
 ggplot(data=df,aes(x=date_tested,y=incidence)) +
@@ -939,6 +895,7 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
 ```
 
 ### Vertical
+
 ```{r}
 # in rows
 ggplot(data=df,aes(x=date_tested,y=incidence)) +
@@ -950,29 +907,83 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
 
 ```
 
-
 ### custimising scale
+
 ```{r}
 ggplot(data=df,aes(x=date_tested,y=incidence)) +
   geom_line() +
   geom_point()+
   facet_wrap(~age_group, scales = "free")
 ```
-
 :::
-
 
 ## Customizing x-axis : ticks and dates
 
 ::: callout-tip
 ### Aim:
+
 -   rotate the x axis ticks
 -   Deal with dates that can be long to display all
 :::
 
+From the objective 1 plot we can customize the x-axis ticks to rotate to a certain angle for better visual. using the theme() function we can customize the title position, labels and tics
 ```{r}
+ggplot(data=df,aes(x=date_tested, y= incidence))+
+  geom_line(aes(color=age_group)) +
+  geom_point()+
+  labs(x="Month", 
+       y="Incidence (Cases/100,000)",
+       title="Malaria Incidence, Mabangata Region, 2018",
+       colour="Age Group") +
+  theme_bw()+
+  theme(plot.title = element_text(hjust=0.5),
+         axis.text.x = element_text(angle=90,hjust=0.5)) 
 ```
 
 
-## last tutorial 
+```{r}
+ggplot(data=df,aes(x=date_tested, y= incidence))+
+  geom_line(aes(color=age_group)) +
+  geom_point()+
+  labs(x="Month", 
+       y="Incidence (Cases/100,000)",
+       title="Malaria Incidence, Mabangata Region, 2018",
+       colour="Age Group") +
+  theme_bw()+
+  theme(plot.title = element_text(hjust=0.5),
+         axis.text.x = element_text(angle=90,hjust=0.5)) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%B")
+```
+
+
+
+
+## last tutorial
+::: callout-tip
+### Exercise:
+
+1.  Write a code snippet to create the following plot: Hint(use the df_clean data, faceting adm2)
+
+![](images/000010.png)
+:::
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+df_clean$date_tested <- as.Date(df_clean$date_tested,"%m/%d/%Y")
+
+
+ggplot(data=df_clean %>% filter(adm1=="East"),aes(x=date_tested, y= conf_total))+
+  geom_point()+
+  labs(x="Month", 
+       y="Total Confirmed cases",
+       title="Malaria confirmed cases, East Zone, 2018") +
+  theme_bw() +facet_wrap(~ adm2)+
+  scale_x_date(date_breaks = "1 month", date_labels = "%B")+
+  theme(plot.title = element_text(hjust=0.5),
+         axis.text.x = element_text(angle=90,hjust=0.5)) 
+```
+
+
 We've only scratched the surface of what you can do with `ggplot2` today, but we hope we've given you a strong basis and you'll be able to learn more in the future!

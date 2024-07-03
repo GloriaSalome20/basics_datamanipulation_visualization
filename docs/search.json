@@ -224,7 +224,7 @@
     "href": "Basic_Visualization_concept.html#customizing-x-axis-ticks-and-dates",
     "title": "Making Plots with ggplot2",
     "section": "Customizing x-axis : ticks and dates",
-    "text": "Customizing x-axis : ticks and dates\n\n\n\n\n\n\nAim:\n\n\n\n\nrotate the x axis ticks\nDeal with dates that can be long to display all",
+    "text": "Customizing x-axis : ticks and dates\n\n\n\n\n\n\nAim:\n\n\n\n\nrotate the x axis ticks\nDeal with dates that can be long to display all\n\n\n\nFrom the objective 1 plot we can customize the x-axis ticks to rotate to a certain angle for better visual. using the theme() function we can customize the title position, labels and tics\n\nggplot(data=df,aes(x=date_tested, y= incidence))+\n  geom_line(aes(color=age_group)) +\n  geom_point()+\n  labs(x=\"Month\", \n       y=\"Incidence (Cases/100,000)\",\n       title=\"Malaria Incidence, Mabangata Region, 2018\",\n       colour=\"Age Group\") +\n  theme_bw()+\n  theme(plot.title = element_text(hjust=0.5),\n         axis.text.x = element_text(angle=90,hjust=0.5)) \n\n\n\n\n\n\n\n\n\nggplot(data=df,aes(x=date_tested, y= incidence))+\n  geom_line(aes(color=age_group)) +\n  geom_point()+\n  labs(x=\"Month\", \n       y=\"Incidence (Cases/100,000)\",\n       title=\"Malaria Incidence, Mabangata Region, 2018\",\n       colour=\"Age Group\") +\n  theme_bw()+\n  theme(plot.title = element_text(hjust=0.5),\n         axis.text.x = element_text(angle=90,hjust=0.5)) +\n  scale_x_date(date_breaks = \"1 month\", date_labels = \"%B\")",
     "crumbs": [
       "Home",
       "Data Visualization",
@@ -236,7 +236,7 @@
     "href": "Basic_Visualization_concept.html#last-tutorial",
     "title": "Making Plots with ggplot2",
     "section": "last tutorial",
-    "text": "last tutorial\nWe’ve only scratched the surface of what you can do with ggplot2 today, but we hope we’ve given you a strong basis and you’ll be able to learn more in the future!",
+    "text": "last tutorial\n\n\n\n\n\n\nExercise:\n\n\n\n\nWrite a code snippet to create the following plot: Hint(use the df_clean data, faceting adm2)\n\n\n\n\n::: {.callout-tip collapse=“true”} ### Solution\n\ndf_clean$date_tested &lt;- as.Date(df_clean$date_tested,\"%m/%d/%Y\")\n\n\nggplot(data=df_clean %&gt;% filter(adm1==\"East\"),aes(x=date_tested, y= conf_total))+\n  geom_point()+\n  labs(x=\"Month\", \n       y=\"Total Confirmed cases\",\n       title=\"Malaria confirmed cases, East Zone, 2018\") +\n  theme_bw() +facet_wrap(~ adm2)+\n  scale_x_date(date_breaks = \"1 month\", date_labels = \"%B\")+\n  theme(plot.title = element_text(hjust=0.5),\n         axis.text.x = element_text(angle=90,hjust=0.5)) \n\n\n\n\n\n\n\n\nWe’ve only scratched the surface of what you can do with ggplot2 today, but we hope we’ve given you a strong basis and you’ll be able to learn more in the future!",
     "crumbs": [
       "Home",
       "Data Visualization",
