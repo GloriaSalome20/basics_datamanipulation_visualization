@@ -13,10 +13,9 @@ execute:
   warning: false
 ---
 
-
 # Step 1: Installing R
 
-**R** is a powerful programming language for statistical computing and graphics. It is one of main programming language used for data science (with other programming languages such as Python and Julia). The following instructions will show you how to install or update R on either a Windows or a Mac computer. Please complete all steps for your machine. If you have any trouble, please reach out to [gshirima@ihi.or.tz](mailto:gshirima@ihi.or.tz?subject=R Help) 
+**R** is a powerful programming language for statistical computing and graphics. It is one of main programming language used for data science (with other programming languages such as Python and Julia). The following instructions will show you how to install or update R on either a Windows or a Mac computer. Please complete all steps for your machine. If you have any trouble, please reach out to [gshirima\@ihi.or.tz](mailto:gshirima@ihi.or.tz?subject=R%20Help)
 
 ## On Windows
 
@@ -171,7 +170,7 @@ In order for RStudio desktop to work with R you must have installed R on your co
 
 You can download R from the [RStudio website](https://posit.co/download/rstudio-desktop/). Scroll to the bottom of the page, where you'll see a button to install R on the left, and a button to install RStudio on the right. You've already installed R, so ignore the left hand side and click on the "Download and Install RStudio Desktop" button on the right. The RStudio website should automatically detect the operating system you're using and prompt you to download the correct one.
 
-The file will be ~400MB and may take a while to download.
+The file will be \~400MB and may take a while to download.
 
 ![](images/macos_rstudio_download.png)
 
@@ -220,7 +219,6 @@ Uncheck Remove duplicate entries in history
 
 # Step 3: Installing R packages
 
-
 A R package is a collection of functions, data, and compiled code in a well-defined format, created to add specific functionality to R.
 
 There are 10,000+ user contributed packages and growing.
@@ -229,8 +227,7 @@ There is a set of standard (or base) packages which is considered part of the R 
 
 You can install packages two different ways: using the RStudio graphic interface, or using the RStudio console.
 
-**Required packages to install**:
-For **Principles and Practice of Data Visualization in R**: `tidyverse`, `ggplot2`
+**Required packages to install**: For **Principles and Practice of Data Visualization in R**: `tidyverse`, `ggplot2`
 
 Other course requirements coming soon.
 
@@ -264,14 +261,14 @@ In the "Console" tab (at the bottom left of the screen if using the default sett
 ![](images/macos_install_packages.png)
 
 ### Step 3
-You should see a series of text scrolling down the screen (there might be a lot!), followed by a message saying that "the downloaded binary packages are in [location]". 
 
-:::callout-tip
+You should see a series of text scrolling down the screen (there might be a lot!), followed by a message saying that "the downloaded binary packages are in \[location\]".
+
+::: callout-tip
 There should **not** be any error messages in this process! If you run into errors, try installing via the user interface. If there are still problems, contact the AMMnet team for support.
-::: 
+:::
 
 ![](images/macos_install_outputs.png)
-
 
 ### Step 4
 
@@ -279,10 +276,9 @@ Test the successful installation by "loading" the package into the console.
 
 Type the words `find.package("PACKAGE_NAME")` into the console. If the package installed successfully, you should see a filepath to the location of the package. If the package didn't install successfully, you'll see an error message. Below, you can see an example with a successfully installed package (`tidyverse`) and a package that has not been installed (`fake_package`).
 
-:::callout-tip
+::: callout-tip
 If you run into errors, try installing via the user interface. If there are still problems, contact the AMMnet team for support.
-::: 
+:::
 
 ![](images/macos_confirm_package.png)
-
 :::

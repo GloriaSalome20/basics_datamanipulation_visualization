@@ -264,7 +264,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#customizing-plots-for-presentation-and-publication" id="toc-customizing-plots-for-presentation-and-publication" class="nav-link" data-scroll-target="#customizing-plots-for-presentation-and-publication">Customizing Plots for Presentation and Publication</a></li>
   <li><a href="#faceting-the-graphs" id="toc-faceting-the-graphs" class="nav-link" data-scroll-target="#faceting-the-graphs">Faceting the graphs</a></li>
   <li><a href="#customizing-x-axis-ticks-and-dates" id="toc-customizing-x-axis-ticks-and-dates" class="nav-link" data-scroll-target="#customizing-x-axis-ticks-and-dates">Customizing x-axis : ticks and dates</a></li>
-  <li><a href="#last-tutorial" id="toc-last-tutorial" class="nav-link" data-scroll-target="#last-tutorial">last tutorial</a></li>
+  <li><a href="#last-tutorial" id="toc-last-tutorial" class="nav-link" data-scroll-target="#last-tutorial">last tutorial</a>
+  <ul class="collapse">
+  <li><a href="#solution-12" id="toc-solution-12" class="nav-link" data-scroll-target="#solution-12">Solution</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -313,10 +316,7 @@ Tip
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bbmle)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Our dataset is a csv file we read the data using the directory/path and name it df</p>
 <div class="cell">
@@ -371,7 +371,7 @@ Aim:
 </section>
 <section id="finding-duplicates-and-dealing-with-them" class="level3">
 <h3 class="anchored" data-anchor-id="finding-duplicates-and-dealing-with-them">Finding Duplicates and dealing with them</h3>
-<p>some observations can be a complete duplicate, this means all the column entries are similar. To deal with duplicates we take the unique observations in the dataset.</p>
+<p>Some observations can be a complete duplicate, this means all the column entries are similar. To deal with duplicates we take the unique observations in the dataset.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Duplicates</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Dealing with duplicates</a></li></ul>
 <div class="tab-content">
@@ -387,7 +387,7 @@ Aim:
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#remove duplicate by unique or distinct</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_clean<span class="ot">&lt;-</span><span class="fu">unique</span>(df_NAomitted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>also a function dinstict() can be used to deal with duplicates removing a whole observation that is duplicated or a variable with duplicate.</p>
+<p>A function dinstict() can be used to deal with duplicates removing a whole observation that is duplicated or a variable with duplicate.</p>
 </div>
 </div>
 </div>
@@ -413,11 +413,13 @@ Aim:
 </ul>
 </div>
 </div>
+<p><img src="images/tidy-data.png" class="img-fluid"></p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Select</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Filter</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Rename</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<p>There multiple ways to select specific variable in the dataset, we will use select() functions with syntax :select(data , ….)</p>
+<p>There multiple ways to select specific variable in the dataset, we will use select() functions with syntax</p>
+<p><code>select(data , ....)</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(df_clean,adm1)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -439,7 +441,7 @@ Exercise:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>create a subset data from the df_clean that has admin1 with all the test variables</p>
+<p>Create a subset data from the df_clean that has admin1 with all the test variables</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1000,7 +1002,8 @@ Solution:
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<p>Filtering observations based on their values can be done with the filter() function. This function works on both quantitative and qualitative variables. with syntax of :\ filter(data , ….)</p>
+<p>Filtering observations based on their values can be done with the filter() function. This function works on both quantitative and qualitative variables. with syntax of :</p>
+<p><code>filter(data , ....)</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(df_clean,adm1<span class="sc">==</span><span class="st">"East"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1133,8 +1136,8 @@ Solution:
 </div>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<p>The rename() function is used to change variable name. with a syntax of: \</p>
-<p>rename(data , new_name = old_name)</p>
+<p>The rename() function is used to change variable name. with a syntax of:</p>
+<p><code>rename(data , new_name = old_name)</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rename</span>(df_clean, <span class="at">date=</span>date_tested)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1159,7 +1162,7 @@ Aim:
 </ul>
 </div>
 </div>
-<p>Using pipe operator ( %&gt;% ) allows you to write sub-queries like we do it in sql. Functions can be written without pipe operator but this helps us to wrap multiple functions together at one command. Syntax data %&gt;% functions</p>
+<p>Using pipe operator ( %&gt;% ) allows you to write sub-queries like we do it in sql. Functions can be written without pipe operator but this helps us to wrap multiple functions together at one command. Syntax <code>data %\&gt;% functions</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#instead of writing</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(df_clean, adm1 <span class="sc">==</span> <span class="st">"East"</span>)</span>
@@ -1295,7 +1298,7 @@ Exercise:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>create a new variable combined in the df_clean dataset with the sum of total test and total confirmed cases</p>
+<p>create a new variable name it <code>combined</code> in the df_clean dataset with the sum of total test and total confirmed cases</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -2411,12 +2414,12 @@ Solution:
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>and</p>
+<p>and also</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2447,6 +2450,7 @@ Aim:
 </div>
 <p>The <code>ggplot</code> library is a powerful tool for creating data visualizations in R. It follows a layered approach to building plots, where each layer adds additional elements to the plot. Understanding how ggplot works can help you create sophisticated and informative visualizations.</p>
 <p>In ggplot, you start with a base plot and add layers called “geometries”, or <code>geom</code>s. Each layer in ggplot adds a different aspect to the plot, allowing you to customize and enhance the visualization. Once geoms have been added, labels and other customizations can be added in a similar way.</p>
+<p><img src="images/NikhilImageedit1.jpg" class="img-fluid"></p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Base Plot: No Information</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Base Plot: With Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Base Plot: With <code>x</code> and <code>y</code></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false">Adding Points</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-5" role="tab" aria-controls="tabset-4-5" aria-selected="false">Adding Lines</a></li></ul>
 <div class="tab-content">
@@ -3389,10 +3393,15 @@ Aim:
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co">#using facet_wrap</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested,<span class="at">y=</span>incidence)) <span class="sc">+</span></span>
-<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span>age_group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> incidence))<span class="sc">+</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>age_group)) <span class="sc">+</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Incidence (Cases/100,000)"</span>,</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria Incidence, Mabangata Region, 2018"</span>,</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour=</span><span class="st">"Age Group"</span>) <span class="sc">+</span></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>( <span class="sc">~</span>age_group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3405,10 +3414,15 @@ Aim:
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in columns</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested,<span class="at">y=</span>incidence)) <span class="sc">+</span></span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> incidence))<span class="sc">+</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>age_group)) <span class="sc">+</span></span>
 <span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>( . <span class="sc">~</span> age_group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Incidence (Cases/100,000)"</span>,</span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria Incidence, Mabangata Region, 2018"</span>,</span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour=</span><span class="st">"Age Group"</span>) <span class="sc">+</span></span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>( . <span class="sc">~</span> age_group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3421,10 +3435,15 @@ Aim:
 <div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># in rows</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested,<span class="at">y=</span>incidence)) <span class="sc">+</span></span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> incidence))<span class="sc">+</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>age_group)) <span class="sc">+</span></span>
 <span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>( age_group <span class="sc">~</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Incidence (Cases/100,000)"</span>,</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria Incidence, Mabangata Region, 2018"</span>,</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour=</span><span class="st">"Age Group"</span>) <span class="sc">+</span></span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>( age_group <span class="sc">~</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3436,14 +3455,68 @@ Aim:
 </div>
 <div id="tabset-10-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-4-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested,<span class="at">y=</span>incidence)) <span class="sc">+</span></span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> incidence))<span class="sc">+</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>age_group)) <span class="sc">+</span></span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>age_group, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Incidence (Cases/100,000)"</span>,</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria Incidence, Mabangata Region, 2018"</span>,</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour=</span><span class="st">"Age Group"</span>) <span class="sc">+</span></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>age_group, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>write codes to produce this plot. Hint: filter the test total variables to areas that tested more than 2500 individuals (df_clean %&gt;% filter(test_total&gt;2500))) and facet adm1</p>
+<p><img src="images/000015.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>df_clean<span class="sc">$</span>date_tested <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df_clean<span class="sc">$</span>date_tested,<span class="st">"%m/%d/%Y"</span>)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df_clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(test_total<span class="sc">&gt;</span><span class="dv">2500</span>) ,<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> test_total))<span class="sc">+</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>( <span class="fu">aes</span>(<span class="at">color=</span> adm2))<span class="sc">+</span></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Total tested cases"</span>,</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria tested cases, country wise, 2018"</span>) <span class="sc">+</span></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span><span class="fu">facet_wrap</span>(<span class="sc">~</span> adm1)<span class="sc">+</span></span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>         ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -3472,25 +3545,6 @@ Aim:
 </div>
 <p>From the objective 1 plot we can customize the x-axis ticks to rotate to a certain angle for better visual. using the theme() function we can customize the title position, labels and tics</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> incidence))<span class="sc">+</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>age_group)) <span class="sc">+</span></span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
-<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Incidence (Cases/100,000)"</span>,</span>
-<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria Incidence, Mabangata Region, 2018"</span>,</span>
-<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour=</span><span class="st">"Age Group"</span>) <span class="sc">+</span></span>
-<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
-<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="fl">0.5</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> incidence))<span class="sc">+</span></span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>age_group)) <span class="sc">+</span></span>
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
@@ -3500,12 +3554,31 @@ Aim:
 <span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour=</span><span class="st">"Age Group"</span>) <span class="sc">+</span></span>
 <span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
 <span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
-<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"1 month"</span>, <span class="at">date_labels =</span> <span class="st">"%B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="fl">0.5</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df,<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> incidence))<span class="sc">+</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color=</span>age_group)) <span class="sc">+</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Incidence (Cases/100,000)"</span>,</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria Incidence, Mabangata Region, 2018"</span>,</span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour=</span><span class="st">"Age Group"</span>) <span class="sc">+</span></span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"1 month"</span>, <span class="at">date_labels =</span> <span class="st">"%B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -3529,24 +3602,26 @@ Exercise:
 <p><img src="images/000010.png" class="img-fluid"></p>
 </div>
 </div>
-<p>::: {.callout-tip collapse=“true”} ### Solution</p>
+<p>::: {.callout-tip collapse=“true”}</p>
+<section id="solution-12" class="level3">
+<h3 class="anchored" data-anchor-id="solution-12">Solution</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>df_clean<span class="sc">$</span>date_tested <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df_clean<span class="sc">$</span>date_tested,<span class="st">"%m/%d/%Y"</span>)</span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df_clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(adm1<span class="sc">==</span><span class="st">"East"</span>),<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> conf_total))<span class="sc">+</span></span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
-<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Total Confirmed cases"</span>,</span>
-<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria confirmed cases, East Zone, 2018"</span>) <span class="sc">+</span></span>
-<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span><span class="fu">facet_wrap</span>(<span class="sc">~</span> adm2)<span class="sc">+</span></span>
-<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"1 month"</span>, <span class="at">date_labels =</span> <span class="st">"%B"</span>)<span class="sc">+</span></span>
-<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
-<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="fl">0.5</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>df_clean<span class="sc">$</span>date_tested <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df_clean<span class="sc">$</span>date_tested,<span class="st">"%m/%d/%Y"</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df_clean <span class="sc">%&gt;%</span> <span class="fu">filter</span>(adm1<span class="sc">==</span><span class="st">"East"</span>),<span class="fu">aes</span>(<span class="at">x=</span>date_tested, <span class="at">y=</span> conf_total))<span class="sc">+</span></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Month"</span>, </span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Total Confirmed cases"</span>,</span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Malaria confirmed cases, East Zone, 2018"</span>) <span class="sc">+</span></span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span><span class="fu">facet_wrap</span>(<span class="sc">~</span> adm2)<span class="sc">+</span></span>
+<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"1 month"</span>, <span class="at">date_labels =</span> <span class="st">"%B"</span>)<span class="sc">+</span></span>
+<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="fl">0.5</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Basic_Visualization_concept_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -3554,6 +3629,7 @@ Exercise:
 <p>We’ve only scratched the surface of what you can do with <code>ggplot2</code> today, but we hope we’ve given you a strong basis and you’ll be able to learn more in the future!</p>
 
 
+</section>
 </section>
 </section>
 

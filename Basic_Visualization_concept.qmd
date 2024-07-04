@@ -28,9 +28,6 @@ remove(list=objects())
 
 library(tidyverse)
 library(ggplot2)
-library(lme4)
-library(bbmle)
-library(lmtest)
 library(gridExtra)
 
 ```
@@ -83,7 +80,7 @@ df2_NAommited<- df %>% drop_na()
 
 ### Finding Duplicates and dealing with them
 
-some observations can be a complete duplicate, this means all the column entries are similar. To deal with duplicates we take the unique observations in the dataset.
+Some observations can be a complete duplicate, this means all the column entries are similar. To deal with duplicates we take the unique observations in the dataset.
 
 ::: panel-tabset
 ### Duplicates
@@ -103,7 +100,7 @@ df_clean<-unique(df_NAomitted)
 
 ```
 
-also a function dinstict() can be used to deal with duplicates removing a whole observation that is duplicated or a variable with duplicate.
+A function dinstict() can be used to deal with duplicates removing a whole observation that is duplicated or a variable with duplicate.
 :::
 
 # Rename, select, filter
@@ -116,10 +113,18 @@ also a function dinstict() can be used to deal with duplicates removing a whole 
 -   Rename the variables
 :::
 
+![](images/tidy-data.png)
+
+
+
+
 ::: panel-tabset
 ### Select
 
-There multiple ways to select specific variable in the dataset, we will use select() functions with syntax :select(data , ....)
+There multiple ways to select specific variable in the dataset, we will use select() functions with syntax
+
+
+`select(data , ....)`
 
 ```{r,results='hide'}
 select(df_clean,adm1)
@@ -136,7 +141,7 @@ select(df_clean,starts_with("A"))
 ::: callout-tip
 ### Exercise:
 
-create a subset data from the df_clean that has admin1 with all the test variables
+Create a subset data from the df_clean that has admin1 with all the test variables
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -149,7 +154,10 @@ select(df_clean,c(adm1,starts_with("tes")))
 
 ### Filter
 
-Filtering observations based on their values can be done with the filter() function. This function works on both quantitative and qualitative variables. with syntax of :\\ filter(data , ....)
+Filtering observations based on their values can be done with the filter() function. This function works on both quantitative and qualitative variables. with syntax of :
+
+
+`filter(data , ....)`
 
 ```{r,results='hide'}
 filter(df_clean,adm1=="East")
@@ -177,9 +185,10 @@ filter(df_clean, adm1=="East"& conf_total>500)
 
 ### Rename
 
-The rename() function is used to change variable name. with a syntax of: \\
+The rename() function is used to change variable name. with a syntax of: 
 
-rename(data , new_name = old_name)
+
+`rename(data , new_name = old_name)`
 
 ```{r,results='hide'}
 rename(df_clean, date=date_tested)
@@ -195,7 +204,7 @@ rename(df_clean, date=date_tested)
 -   Create new variables
 :::
 
-Using pipe operator ( %\>% ) allows you to write sub-queries like we do it in sql. Functions can be written without pipe operator but this helps us to wrap multiple functions together at one command. Syntax data %\>% functions
+Using pipe operator ( %\>% ) allows you to write sub-queries like we do it in sql. Functions can be written without pipe operator but this helps us to wrap multiple functions together at one command. Syntax `data %\>% functions`
 
 ```{r,results='hide'}
 #instead of writing
@@ -266,7 +275,7 @@ df_clean %>% mutate(case_per_1000 = conf_total/1000)
 ::: callout-tip
 ### Exercise:
 
-create a new variable combined in the df_clean dataset with the sum of total test and total confirmed cases
+create a new variable name it `combined` in the df_clean dataset with the sum of total test and total confirmed cases
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -301,24 +310,7 @@ df_clean %>% mutate(combined= (conf_total + test_total))
 
 At the end of the training we will be able to produce two main plots and understand how to go about them:
 
-```{r echo=FALSE,warning=FALSE}
 
-df_clean$date_tested <- as.Date(df_clean$date_tested,"%m/%d/%Y")
-
-
-ggplot(data=df_clean %>% filter(adm1=="East"),aes(x=date_tested, y= conf_total))+
-  geom_point()+
-  labs(x="Month", 
-       y="Total Confirmed cases",
-       title="Malaria confirmed cases, East Zone, 2018") +
-  theme_bw() +facet_wrap(~ adm2)+
-  scale_x_date(date_breaks = "1 month", date_labels = "%B")+
-  theme(plot.title = element_text(hjust=0.5),
-         axis.text.x = element_text(angle=90,hjust=0.5)) 
-  # 
-```
-
-and
 
 ```{r echo=FALSE,warning=FALSE}
 df <- read.csv("C:/Users/shirgl/Desktop/SwissTPH/Trainings/NIMRI_MAPEA/Basics_to_data_manipulation_and_visualization/Mabangata_region_incidence2018.csv")
@@ -336,10 +328,28 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
        title="Malaria Incidence, Mabangata Region, 2018",
        colour="Age Group") +
   theme_bw() +
-  theme(plot.title = element_text(hjust=0.5),
-        axis.text.x = element_text(angle=45,hjust=1)) +
-  scale_x_date(date_breaks = "1 month", date_labels = "%B")
+  theme(plot.title = element_text(hjust=0.5))
 ```
+
+and also 
+
+```{r echo=FALSE,warning=FALSE}
+
+df_clean$date_tested <- as.Date(df_clean$date_tested,"%m/%d/%Y")
+
+
+ggplot(data=df_clean %>% filter(adm1=="East"),aes(x=date_tested, y= conf_total))+
+  geom_point()+
+  labs(x="Month", 
+       y="Total Confirmed cases",
+       title="Malaria confirmed cases, East Zone, 2018") +
+  theme_bw() +facet_wrap(~ adm2)+
+  scale_x_date(date_breaks = "1 month", date_labels = "%B")+
+  theme(plot.title = element_text(hjust=0.5),
+         axis.text.x = element_text(angle=90,hjust=0.5)) 
+  # 
+```
+
 
 ## `ggplot2`: A Layered Approach to Plotting
 
@@ -353,6 +363,8 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
 The `ggplot` library is a powerful tool for creating data visualizations in R. It follows a layered approach to building plots, where each layer adds additional elements to the plot. Understanding how ggplot works can help you create sophisticated and informative visualizations.
 
 In ggplot, you start with a base plot and add layers called "geometries", or `geom`s. Each layer in ggplot adds a different aspect to the plot, allowing you to customize and enhance the visualization. Once geoms have been added, labels and other customizations can be added in a similar way.
+
+![](images/NikhilImageedit1.jpg)
 
 ::: panel-tabset
 ### Base Plot: No Information
@@ -878,19 +890,29 @@ ggplot2 in R facet layer is used to split the data up into subsets of the entire
 
 ```{r}
 #using facet_wrap
-ggplot(data=df,aes(x=date_tested,y=incidence)) +
-  geom_line() +
+
+ggplot(data=df,aes(x=date_tested, y= incidence))+
+  geom_line(aes(color=age_group)) +
   geom_point()+
-  facet_wrap( ~age_group)
+  labs(x="Month", 
+       y="Incidence (Cases/100,000)",
+       title="Malaria Incidence, Mabangata Region, 2018",
+       colour="Age Group") +
+  theme_bw() + facet_wrap( ~age_group)
 ```
 
 ### horizontal
 
 ```{r}
 # in columns
-ggplot(data=df,aes(x=date_tested,y=incidence)) +
-  geom_line() +
+ggplot(data=df,aes(x=date_tested, y= incidence))+
+  geom_line(aes(color=age_group)) +
   geom_point()+
+  labs(x="Month", 
+       y="Incidence (Cases/100,000)",
+       title="Malaria Incidence, Mabangata Region, 2018",
+       colour="Age Group") +
+  theme_bw() +
   facet_grid( . ~ age_group)
 ```
 
@@ -898,9 +920,14 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
 
 ```{r}
 # in rows
-ggplot(data=df,aes(x=date_tested,y=incidence)) +
-  geom_line() +
+ggplot(data=df,aes(x=date_tested, y= incidence))+
+  geom_line(aes(color=age_group)) +
   geom_point()+
+  labs(x="Month", 
+       y="Incidence (Cases/100,000)",
+       title="Malaria Incidence, Mabangata Region, 2018",
+       colour="Age Group") +
+  theme_bw() +
   facet_grid( age_group ~ .)
 
 
@@ -910,12 +937,48 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
 ### custimising scale
 
 ```{r}
-ggplot(data=df,aes(x=date_tested,y=incidence)) +
-  geom_line() +
+ggplot(data=df,aes(x=date_tested, y= incidence))+
+  geom_line(aes(color=age_group)) +
   geom_point()+
+  labs(x="Month", 
+       y="Incidence (Cases/100,000)",
+       title="Malaria Incidence, Mabangata Region, 2018",
+       colour="Age Group") +
+  theme_bw() +
   facet_wrap(~age_group, scales = "free")
 ```
 :::
+
+::: callout-tip
+### Exercise:
+
+write codes to produce this plot. Hint: filter the test total variables to areas that tested more than 2500 individuals (df_clean %>% filter(test_total>2500))) and facet adm1
+
+![](images/000015.png)
+
+
+:::
+
+::: {.callout-tip collapse="true"}
+### Solution
+
+```{r}
+df_clean$date_tested <- as.Date(df_clean$date_tested,"%m/%d/%Y")
+
+
+ggplot(data=df_clean %>% filter(test_total>2500) ,aes(x=date_tested, y= test_total))+
+  geom_point( aes(color= adm2))+
+  labs(x="Month", 
+       y="Total tested cases",
+       title="Malaria tested cases, country wise, 2018") +
+  theme_bw() +facet_wrap(~ adm1)+
+  theme(plot.title = element_text(hjust=0.5),
+         ) 
+```
+:::
+
+
+
 
 ## Customizing x-axis : ticks and dates
 
@@ -927,6 +990,7 @@ ggplot(data=df,aes(x=date_tested,y=incidence)) +
 :::
 
 From the objective 1 plot we can customize the x-axis ticks to rotate to a certain angle for better visual. using the theme() function we can customize the title position, labels and tics
+
 ```{r}
 ggplot(data=df,aes(x=date_tested, y= incidence))+
   geom_line(aes(color=age_group)) +
@@ -939,7 +1003,6 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
   theme(plot.title = element_text(hjust=0.5),
          axis.text.x = element_text(angle=90,hjust=0.5)) 
 ```
-
 
 ```{r}
 ggplot(data=df,aes(x=date_tested, y= incidence))+
@@ -955,10 +1018,8 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
   scale_x_date(date_breaks = "1 month", date_labels = "%B")
 ```
 
-
-
-
 ## last tutorial
+
 ::: callout-tip
 ### Exercise:
 
@@ -967,7 +1028,8 @@ ggplot(data=df,aes(x=date_tested, y= incidence))+
 ![](images/000010.png)
 :::
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"} 
+
 ### Solution
 
 ```{r}
@@ -984,6 +1046,5 @@ ggplot(data=df_clean %>% filter(adm1=="East"),aes(x=date_tested, y= conf_total))
   theme(plot.title = element_text(hjust=0.5),
          axis.text.x = element_text(angle=90,hjust=0.5)) 
 ```
-
 
 We've only scratched the surface of what you can do with `ggplot2` today, but we hope we've given you a strong basis and you'll be able to learn more in the future!
